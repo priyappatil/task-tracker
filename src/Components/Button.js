@@ -1,7 +1,7 @@
 import React from "react"
 
 // const Button = (props) => {
-//     return <button style = {{ backgroundColor : props.backgroundColor, color : props.color }}> { props.text } </button>
+//     return <button style = {{ backgroundColor : props.backgroundColor, color : props.color }}> { props.text } </button>           // This is called as inline styling
 // }
 
 // destructuring the props
