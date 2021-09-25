@@ -44,13 +44,14 @@ class App extends Component {
   // States of the App Component --> Data of the Component
   // States are immutable i.e cannot be chahged.
   state = {                      // name of state is always going to be state
-    person : [
+    persons : [
       {name : 'Max', age : 21},
       {name : 'Evan', age : 24},
       {name : 'Ben', age : 22}
     ],
 
-    otherState : 'Some other State'
+    otherState : 'Some other State',
+    showPerson : false
   }
 
   // Methods :- Functionalities inside a class
@@ -81,32 +82,87 @@ class App extends Component {
     })
   }
 
+  togglePerson = () => {
+    const doShow = this.state.showPerson
+    this.setState({showPerson : !doShow})
+  }
+
+  // displayPerson = () => {
+  //   var person = (null)
+
+  //   if(this.state.showPerson) {
+  //     person = (
+  //       <div>    
+  //         <Person 
+  //         name = {this.state.person[0].name} 
+  //         age = {this.state.person[0].age} 
+  //         myClick = {() => this.changeName('Max!!!')} />
+          
+  //         <Person 
+  //         name = {this.state.person[1].name} 
+  //         age = {this.state.person[1].age}
+  //         myClick = {this.changeName.bind(this, 'Evan')} 
+  //         changed = {this.changeName} />
+          
+  //         <Person 
+  //         name = {this.state.person[2].name} 
+  //         age = {this.state.person[2].age} 
+  //         changed = {this.changeName} />
+  //       </div>
+  //     )
+  //   }
+  //   return
+  // }
+
+  deletePerson = (perssonIndex) => {
+    const persons = this.state.persons
+    persons.splice(perssonIndex, 1)       // splice is an inbuilt method in JS which breaks the list.
+    this.setState({persons : persons})
+  }
+
   render() {
     return(
-      // Accessing the data from the component state
-      <div style = {{display:'flex', flexDirection:'column'}}>
-        <div>
-          <Person 
-          name = {this.state.person[0].name} 
-          age = {this.state.person[0].age} 
-          myClick = {() => this.changeName('Max!!!')} />
-          
-          <Person 
-          name = {this.state.person[1].name} 
-          age = {this.state.person[1].age}
-          myClick = {this.changeName.bind(this, 'Evan')} 
-          changed = {this.changeName} />
-          
-          <Person 
-          name = {this.state.person[2].name} 
-          age = {this.state.person[2].age} 
-          changed = {this.changeName} />
-        </div>    
 
-        {/* change the name and age of state on button click event/  */}
-        <button style = {{alignSelf : 'center'}} onClick = {this.changeState} className = "btn btn-primary">Change State</button>
+      <div>
+         {/* Accessing the data from the component state */}
+        <div style = {{display:'flex', flexDirection:'column'}}>
+        
+          <button className = "btn btn-success"
+          onClick = {this.togglePerson}>Toggle Person</button>
+
+          {/* Using ternary operator here for the condition as --> if this.state.showPerson is true ? div : null --> line no 117 */}
+          { this.state.showPerson ? 
+          <div> 
+
+            {this.state.persons.map((person, index) => {
+             return <Person 
+                click = { () => this.deletePerson(index)}
+                name = {person.name} 
+                age = {person.age} />
+            })}
+            {/* <Person 
+            name = {this.state.person[0].name} 
+            age = {this.state.person[0].age} 
+            myClick = {() => this.changeName('Max!!!')} />
+            
+            <Person 
+            name = {this.state.person[1].name} 
+            age = {this.state.person[1].age}
+            myClick = {this.changeName.bind(this, 'Evan')} 
+            changed = {this.changeName} />
+            
+            <Person 
+            name = {this.state.person[2].name} 
+            age = {this.state.person[2].age} 
+            changed = {this.changeName} /> */}
+          </div> : null }
+
+          {/* change the name and age of state on button click event/  */}
+          {/* <button style = {{alignSelf : 'center'}} onClick = {this.changeState} className = "btn btn-primary">Change State</button> */}
+        </div>
+         {/* <Person name = "Priya" age = "20" /> */}
       </div>
-      // <Person name = "Priya" age = "20" />
+
     )
   }
 }
